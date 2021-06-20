@@ -1,3 +1,5 @@
+import './ImageGalleryItem.css';
+
 const ImageGalleryItem = ({ id, url }) => {
   return (
     <li className="ImageGalleryItem" key={id}>

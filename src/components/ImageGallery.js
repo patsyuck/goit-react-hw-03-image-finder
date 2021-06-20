@@ -1,4 +1,5 @@
 import ImageGalleryItem from './ImageGalleryItem';
+import './ImageGallery.css';
 
 const ImageGallery = ({ cards }) => {
   return (
