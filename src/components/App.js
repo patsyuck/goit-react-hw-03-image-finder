@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Searchbar from './Searchbar';
 import ImageGallery from './ImageGallery';
+import MyLoader from './Loader';
 
 const API_KEY = '21312315-f1f0be60f3efa7b19271edd39';
 
@@ -39,7 +40,7 @@ export class App extends Component {
       <div className="App">
         <Searchbar />
         {this.state.loading ? (
-          <h2>Loading</h2>
+          <MyLoader />
         ) : (
           <ImageGallery cards={this.state.cards} />
         )}
