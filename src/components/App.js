@@ -3,6 +3,7 @@ import './App.css';
 import Searchbar from './Searchbar';
 import ImageGallery from './ImageGallery';
 import MyLoader from './Loader';
+import Button from './Button';
 
 const API_KEY = '21312315-f1f0be60f3efa7b19271edd39';
 
@@ -14,7 +15,18 @@ export class App extends Component {
     loading: false,
   };
 
+  handleChange = event => {
+    this.setState({ query: event.target.value });
+  };
+
+  handleSubmit = () => {};
+
+  handleLoadMore = () => {
+    this.setState({ page: this.state.page + 1 });
+  };
+
   async componentDidMount() {
+    console.log(this.state.page);
     this.setState({ loading: true });
     const { query, page } = this.state;
     const endpoint = `https://pixabay.com/api/?q=${query}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`;
@@ -26,8 +38,7 @@ export class App extends Component {
         image: hit.webformatURL,
         bigImage: hit.largeImageURL,
       }));
-      console.log(cards);
-      this.setState({ cards: cards });
+      this.setState({ cards: this.state.cards.concat(cards) });
     } catch (error) {
       console.error(error);
     } finally {
@@ -44,7 +55,14 @@ export class App extends Component {
         ) : (
           <ImageGallery cards={this.state.cards} />
         )}
+        {this.state.cards.length > 0 && (
+          <Button onSubmit={this.handleLoadMore} />
+        )}
       </div>
     );
+  }
+
+  componentDidUpdate() {
+    console.log(this.state.page);
   }
 }
