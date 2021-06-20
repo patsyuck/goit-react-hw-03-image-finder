@@ -1,3 +1,5 @@
+import './Searchbar.css';
+
 const Searchbar = () => {
   return (
     <header className="Searchbar">
