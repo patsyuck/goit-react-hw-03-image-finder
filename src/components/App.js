@@ -13,6 +13,7 @@ export class App extends Component {
     page: 1,
     cards: [],
     loading: false,
+    endpoint: '',
   };
 
   handleChange = event => {
@@ -26,10 +27,11 @@ export class App extends Component {
   };
 
   async componentDidMount() {
+    console.log('Mount, page:');
     console.log(this.state.page);
-    this.setState({ loading: true });
     const { query, page } = this.state;
     const endpoint = `https://pixabay.com/api/?q=${query}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`;
+    this.setState({ loading: true, endpoint: endpoint });
     try {
       const response = await fetch(endpoint);
       const data = await response.json();
@@ -62,7 +64,31 @@ export class App extends Component {
     );
   }
 
-  componentDidUpdate() {
+  async componentDidUpdate() {
+    console.log('Update, page:');
     console.log(this.state.page);
+    const { query, page } = this.state;
+    const endpoint = `https://pixabay.com/api/?q=${query}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`;
+    if (endpoint !== this.state.endpoint) {
+      this.setState({ loading: true, endpoint: endpoint });
+      try {
+        const response = await fetch(endpoint);
+        const data = await response.json();
+        const cards = data.hits.map(hit => ({
+          id: hit.id,
+          image: hit.webformatURL,
+          bigImage: hit.largeImageURL,
+        }));
+        this.setState({ cards: this.state.cards.concat(cards) });
+      } catch (error) {
+        console.error(error);
+      } finally {
+        this.setState({ loading: false });
+      }
+    }
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: 'smooth',
+    });
   }
 }
