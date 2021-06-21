@@ -16,10 +16,6 @@ export class App extends Component {
     endpoint: '',
   };
 
-  /*handleChange = event => {
-    this.setState({ query: event.target.value });
-  };*/
-
   handleSubmit = event => {
     event.preventDefault();
     console.log('Submit');
