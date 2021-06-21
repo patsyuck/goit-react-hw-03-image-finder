@@ -9,7 +9,7 @@ const API_KEY = '21312315-f1f0be60f3efa7b19271edd39';
 
 export class App extends Component {
   state = {
-    query: 'forest',
+    query: '',
     page: 1,
     cards: [],
     loading: false,
@@ -34,21 +34,23 @@ export class App extends Component {
     console.log('Mount, page:');
     console.log(this.state.page);
     const { query, page } = this.state;
-    const endpoint = `https://pixabay.com/api/?q=${query}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`;
-    this.setState({ loading: true, endpoint: endpoint });
-    try {
-      const response = await fetch(endpoint);
-      const data = await response.json();
-      const cards = data.hits.map(hit => ({
-        id: hit.id,
-        image: hit.webformatURL,
-        bigImage: hit.largeImageURL,
-      }));
-      this.setState({ cards: this.state.cards.concat(cards) });
-    } catch (error) {
-      console.error(error);
-    } finally {
-      this.setState({ loading: false });
+    if (query !== '') {
+      const endpoint = `https://pixabay.com/api/?q=${query}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`;
+      this.setState({ loading: true, endpoint: endpoint });
+      try {
+        const response = await fetch(endpoint);
+        const data = await response.json();
+        const cards = data.hits.map(hit => ({
+          id: hit.id,
+          image: hit.webformatURL,
+          bigImage: hit.largeImageURL,
+        }));
+        this.setState({ cards: this.state.cards.concat(cards) });
+      } catch (error) {
+        console.error(error);
+      } finally {
+        this.setState({ loading: false });
+      }
     }
   }
 
