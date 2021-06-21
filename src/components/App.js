@@ -16,11 +16,15 @@ export class App extends Component {
     endpoint: '',
   };
 
-  handleChange = event => {
+  /*handleChange = event => {
     this.setState({ query: event.target.value });
-  };
+  };*/
 
-  handleSubmit = () => {};
+  handleSubmit = event => {
+    event.preventDefault();
+    console.log('Submit');
+    this.setState({ query: event.target[1].value, page: 1, cards: [] });
+  };
 
   handleLoadMore = () => {
     this.setState({ page: this.state.page + 1 });
@@ -51,7 +55,7 @@ export class App extends Component {
   render() {
     return (
       <div className="App">
-        <Searchbar />
+        <Searchbar onSubmit={this.handleSubmit} />
         {this.state.loading ? (
           <MyLoader />
         ) : (
