@@ -1,8 +1,8 @@
 import './ImageGalleryItem.css';
 
-const ImageGalleryItem = ({ id, url }) => {
+const ImageGalleryItem = ({ url }) => {
   return (
-    <li className="ImageGalleryItem" key={id}>
+    <li className="ImageGalleryItem">
       <img src={url} alt="" className="ImageGalleryItem-image" />
     </li>
   );
