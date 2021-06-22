@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
-import Searchbar from './Searchbar';
-import ImageGallery from './ImageGallery';
-import MyLoader from './Loader';
-import Button from './Button';
-import Modal from './Modal';
+import Searchbar from './components/Searchbar/Searchbar';
+import ImageGallery from './components/ImageGallery/ImageGallery';
+import MyLoader from './components/Loader/Loader';
+import Button from './components/Button/Button';
+import Modal from './components/Modal/Modal';
 
 const API_KEY = '21312315-f1f0be60f3efa7b19271edd39';
 

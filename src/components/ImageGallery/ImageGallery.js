@@ -1,4 +1,4 @@
-import ImageGalleryItem from './ImageGalleryItem';
+import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
 import './ImageGallery.css';
 
 const ImageGallery = ({ cards, openModal }) => {
