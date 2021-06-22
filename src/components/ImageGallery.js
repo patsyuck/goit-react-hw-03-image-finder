@@ -1,7 +1,7 @@
 import ImageGalleryItem from './ImageGalleryItem';
 import './ImageGallery.css';
 
-const ImageGallery = ({ cards }) => {
+const ImageGallery = ({ cards, openModal }) => {
   return (
     <ul className="ImageGallery">
       {cards.map(card => (
@@ -9,6 +9,7 @@ const ImageGallery = ({ cards }) => {
           key={card.id}
           url={card.image}
           bigUrl={card.bigImage}
+          openModal={openModal}
         />
       ))}
     </ul>

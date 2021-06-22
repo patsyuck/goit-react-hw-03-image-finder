@@ -1,12 +1,9 @@
 import './ImageGalleryItem.css';
 /*import Instance from './Modal';*/
 
-const ImageGalleryItem = ({ url, bigUrl }) => {
+const ImageGalleryItem = ({ url, openModal, bigUrl }) => {
   return (
-    <li
-      className="ImageGalleryItem"
-      /*onClick={() => { Instance.show() }}*/
-    >
+    <li className="ImageGalleryItem" onClick={openModal}>
       <img src={url} alt="" className="ImageGalleryItem-image" />
     </li>
   );

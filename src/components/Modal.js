@@ -1,5 +1,15 @@
 import './Modal.css';
 
+const Instance = ({ photo, closeModal }) => {
+  return (
+    <div className="Overlay" onClick={closeModal}>
+      <div className="Modal">
+        <img src={photo} alt="" />
+      </div>
+    </div>
+  );
+};
+
 /* 1-ий варіант: LightBox із ТЗ */
 /*import * as basicLightbox from 'basiclightbox';
 
@@ -13,7 +23,7 @@ const Instance = basicLightbox.create(`
 `)*/
 
 /* 2-ий варіант: модалка з Material UI */
-import { Modal } from '@material-ui/core';
+/*import { Modal } from '@material-ui/core';
 
 const Instance = () => {
   return (
@@ -26,7 +36,7 @@ const Instance = () => {
       </div>
     </Modal>
   );
-};
+};*/
 
 export default Instance;
 
