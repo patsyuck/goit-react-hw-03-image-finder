@@ -15,15 +15,16 @@ export class App extends Component {
     cards: [],
     loading: false,
     endpoint: '',
+    isOpenModal: false,
     bigPhoto: '',
   };
 
   handleOpenModal = photo => () => {
-    this.setState({ bigPhoto: photo });
+    this.setState({ bigPhoto: photo, isOpenModal: true });
   };
 
   handleCloseModal = () => {
-    this.setState({ bigPhoto: '' });
+    this.setState({ bigPhoto: '', isOpenModal: false });
   };
 
   handleSubmit = event => {
@@ -36,27 +37,31 @@ export class App extends Component {
     this.setState({ page: this.state.page + 1 });
   };
 
+  async handleRequest(endpoint) {
+    this.setState({ loading: true, endpoint: endpoint });
+    try {
+      const response = await fetch(endpoint);
+      const data = await response.json();
+      const cards = data.hits.map(hit => ({
+        id: hit.id,
+        image: hit.webformatURL,
+        bigImage: hit.largeImageURL,
+      }));
+      this.setState({ cards: [...this.state.cards, ...cards] });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      this.setState({ loading: false });
+    }
+  }
+
   async componentDidMount() {
     /*console.log('Mount, page:');
     console.log(this.state.page);*/
     const { query, page } = this.state;
     if (query !== '') {
       const endpoint = `https://pixabay.com/api/?q=${query}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`;
-      this.setState({ loading: true, endpoint: endpoint });
-      try {
-        const response = await fetch(endpoint);
-        const data = await response.json();
-        const cards = data.hits.map(hit => ({
-          id: hit.id,
-          image: hit.webformatURL,
-          bigImage: hit.largeImageURL,
-        }));
-        this.setState({ cards: this.state.cards.concat(cards) });
-      } catch (error) {
-        console.error(error);
-      } finally {
-        this.setState({ loading: false });
-      }
+      this.handleRequest(endpoint);
     }
   }
 
@@ -75,7 +80,7 @@ export class App extends Component {
         {this.state.cards.length > 0 && (
           <Button onSubmit={this.handleLoadMore} />
         )}
-        {this.state.bigPhoto !== '' && (
+        {this.state.isOpenModal === true && (
           <Modal
             photo={this.state.bigPhoto}
             closeModal={this.handleCloseModal}
@@ -91,21 +96,7 @@ export class App extends Component {
     const { query, page } = this.state;
     const endpoint = `https://pixabay.com/api/?q=${query}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`;
     if (endpoint !== this.state.endpoint) {
-      this.setState({ loading: true, endpoint: endpoint });
-      try {
-        const response = await fetch(endpoint);
-        const data = await response.json();
-        const cards = data.hits.map(hit => ({
-          id: hit.id,
-          image: hit.webformatURL,
-          bigImage: hit.largeImageURL,
-        }));
-        this.setState({ cards: this.state.cards.concat(cards) });
-      } catch (error) {
-        console.error(error);
-      } finally {
-        this.setState({ loading: false });
-      }
+      this.handleRequest(endpoint);
     }
     window.scrollTo({
       top: document.documentElement.scrollHeight,
