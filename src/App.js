@@ -29,7 +29,6 @@ export class App extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    /*console.log('Submit');*/
     this.setState({ query: event.target[1].value, page: 1, cards: [] });
   };
 
@@ -56,8 +55,6 @@ export class App extends Component {
   }
 
   async componentDidMount() {
-    /*console.log('Mount, page:');
-    console.log(this.state.page);*/
     const { query, page } = this.state;
     if (query !== '') {
       const endpoint = `https://pixabay.com/api/?q=${query}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`;
@@ -91,8 +88,6 @@ export class App extends Component {
   }
 
   async componentDidUpdate() {
-    /*console.log('Update, page:');
-    console.log(this.state.page);*/
     const { query, page } = this.state;
     const endpoint = `https://pixabay.com/api/?q=${query}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`;
     if (endpoint !== this.state.endpoint) {
