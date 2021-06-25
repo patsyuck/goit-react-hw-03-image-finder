@@ -6,7 +6,7 @@ const Modal = ({ photo, closeModal }) => {
       className="Overlay"
       onClick={closeModal}
       onKeyDown={event => {
-        if (event.keyCode === 27) {
+        if (event.code === 'Escape') {
           closeModal();
         }
       }}
